@@ -8,11 +8,10 @@ torchsummary
 scipy
 audioread
 librosa
-torchvision
 torchmetrics
 pytorch-metric-learning
 augly
 tabulate
 hyperpyyaml
-torchaudio
 tensorboardx
+torch-audiomentations

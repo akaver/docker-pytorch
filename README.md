@@ -6,9 +6,9 @@ Mainly used in two ways:
 * as remote python interpreter in local DL machine or laptop, using PyCharm
 * converted into Singular image and running experiments in remote DL server/HPC. Job scheduling is done via Slurm.
 
-Everything is done/tested in linux (Ubuntu) and on Intel based macbook (Big Sur). On mac - no GPU support. Not used/tested on Windows.  
+Everything is done/tested in linux (Ubuntu) and on M1 Max macbook. Not used/tested on Windows.  
 
-As of summer 2021 my local DL machine has single Nvidia RTX2080(8gb), 64gb ram, 1x Intel Core i9 - 4 cores, 8 threads.  
+As of winter 2022 my local DL machine has single Nvidia RTX3090(24gb), 64gb ram, 1x Intel Core i9 - 4 cores, 8 threads.  
 My main remote DL has 8x Nvidia A100 (48gb per card), 1Tb ram, 2x AMD Epyc 7742 cpus (2x64 cores, 256 threads).  
 https://taltech.ee/en/itcollege/hpc-centre  
 
@@ -20,7 +20,7 @@ akaver/pytorch:latest
 https://hub.docker.com/r/akaver/pytorch/tags  
 
 
-Libraries installed in the image vary based on my current need. No guarantees.  
+Libraries installed in the image at any given time vary based on my current need. No guarantees.  
 There are many conflicting libraries and their dependencies being balanced all the time. YMMV.  
 
 ## Build instructions
@@ -53,14 +53,14 @@ docker push akaver/pytorch:latest
 
 ## Singularity
 
-HPC does not support docker - docker containers have root level access to system, thus many security problems. Singularity supports docker images and runs in userspace.  
+HPC does not support docker - docker containers have root level access to system, thus many security problems. Singularity supports docker images and runs them in userspace.  
 Singularity has many weird quirks and differences compared to the docker:  
-* to persist data, mounted directories have to be precreated in image (currently  in this image: /data for datasets and results and /opt/project for python files).
+* to persist data, mounted directories have to be precreated in image (currently  in this image: /data for datasets and results and /project for python files).
 * WORKDIR is not supported - execution starts from default home directory mountpoint.  
 
 Look into singularity directory for some of my examples. Scripts folder contains testing run scripts for linux and osx.
 
 ## Docker
 
-Docker container settings in PyCharm  
---entrypoint -v /home/akaver/!Dev/speechbrain:/opt/project -v /mnt/ml-stuff2:/data --rm --gpus all
+Docker container settings in my personal PyCharm  
+--entrypoint -v /home/akaver/!Dev/speechbrain:/project -v /mnt/ml-stuff2:/data --rm --gpus all
